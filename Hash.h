@@ -1,3 +1,6 @@
+#ifndef HASH_H
+#define HASH_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -50,3 +53,4 @@ bool hash_iter_al_final(const hash_iter_t *iter);
 //Destruye el iterador
 void hash_iter_destruir(hash_iter_t* iter);
 
+#endif // HASH_H
