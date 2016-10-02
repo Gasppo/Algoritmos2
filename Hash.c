@@ -141,7 +141,55 @@ bool hash_guardar(hash_t *hash, const char *clave, void *dato){
            
         
     
-    
+//----------------------FUNCIONES DE ITERACION-------------------------------------------------------------
+hash_iter_t *hash_iter_crear(const hash_t *hash){
+	hash_iter_t* hash_iter = malloc(sizeof(hash_iter_t));
+	if (hash_iter == NULL){
+	 return NULL;
+	}
+	hash_iter->hash = hash;
+	if (hash_cantidad(hash) == 0){
+		hash_iter->posicion = hash->tamanio;
+	}
+	else{
+		int i = 0;
+		while((i<hash->tamanio) && (hash->tabla[i]->estado != LLENO)){
+			i++;
+		}
+		hash_iter->posicion = i;
+	}
+	return hash_iter;
+}
+
+
+bool hash_iter_avanzar(hash_iter_t *iter){
+	if (hash_iter_al_final(iter)){
+	return false;
+	}
+	iter->posicion++;
+	while((!hash_iter_al_final(iter)) && (iter->hash->tabla[iter->posicion]->estado != LLENO)){
+		iter->posicion++;
+	}
+	return true;
+}
+
+
+const char *hash_iter_ver_actual(const hash_iter_t *iter){
+	return iter->hash->tabla[iter->posicion]->clave;
+}
+
+
+bool hash_iter_al_final(const hash_iter_t *iter){
+	if(iter->posiscion == iter->hash->tamanio){
+		return true;
+	}
+	return false;
+}
+
+
+void hash_iter_destruir(hash_iter_t* iter){
+	free(iter);
+}
     
 
 
