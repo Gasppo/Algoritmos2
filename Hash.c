@@ -114,11 +114,14 @@ bool hash_redimensionar(hash_t *hash, size_t tam_nuevo){
     size_t aux = hash->cantidad;
 
     nodo_hash_t *tabla_auxiliar = hash->tabla;
+    //free(hash->tabla);
     hash->tabla = tabla_nueva;
     for(int i = 0; i < hash->tamanio; i++){
         if(tabla_auxiliar[i].estado == LLENO){
             if(!hash_guardar(hash, tabla_auxiliar[i].clave, tabla_auxiliar[i].dato)){
+		//free(hash->tabla);
                 hash->tabla = tabla_auxiliar;
+		//free(tabla_auxiliar);
                 return false;
             }
         }
